@@ -1,6 +1,6 @@
 {
 	"name" : "just-core/auth-crude-acl",
-	"description" : "render markdown pages into the just-core UI harness",
+	"description" : "Crude Role Based Access Control List",
 	"license" : "GNU",
 	"keywords" : [
 		"just-core",

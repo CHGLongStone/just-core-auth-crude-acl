@@ -17,7 +17,7 @@
 	"homepage" : "https://chglongstone.github.io/just-core-auth-crude-acl",
 	"require" : {
 		"php" : ">=5.3.7",
-		"just-core/dao-orm": "dev-master"
+		"just-core/dao-orm": ">=v0.7.0"
 	},
 	"suggest": {
 		"just-core/stub": "Stub application for the just-core eco system, see how simple it is...",

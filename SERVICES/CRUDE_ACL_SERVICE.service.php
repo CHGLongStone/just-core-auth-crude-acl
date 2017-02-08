@@ -62,39 +62,33 @@ use JCORE\AUTH\AUTH_INTERFACE as AUTH_INTERFACE;
  * @package JCORE\SERVICE\AUTH 
 */
 class CRUDE_ACL  implements AUTH_INTERFACE{ 
-	/** 
-	* 
-	*/
-	protected $serviceRequest = null;
-	/** 
-	* 
-	*/
-	public $serviceResponse = null;
-	/** 
-	* 
-	*/
-	public $error = null;
-	
-	/** 
-	* 
+	/**
+	* @access public 
+	* @var string
 	*/
 	public $ROLE_LIST = null;
-	/** 
-	* 
+	/**
+	* @access public 
+	* @var string
 	*/
 	public $WORKING_RULE = null;
-	/** 
-	* 
+	/**
+	* @access public 
+	* @var string
 	*/
 	public $WORKING_ROLE = null;
-	/** 
-	* 
+	/**
+	* @access public 
+	* @var string
 	*/
 	public $ERROR_MESSAGE = null;
 	/** 
 	* STRICT to return FLASE by default from authorizeDeny
 	* or any other value to return TRUE by default
 	* this could be pulled from the config
+	* 
+	* @access public 
+	* @var string
 	*/
 	public $PERMISSIVE = 'STRICT';
 	
@@ -111,13 +105,18 @@ class CRUDE_ACL  implements AUTH_INTERFACE{
 	public function __construct(){
 		return;
 	}
-	
+	/**
+	* initialize 
+	* @param array args 
+	* @return return  
+	*/
 	public function init($args){
+		#echo __METHOD__.'@'.__LINE__.'  '.'<br>'; 
 		/**
 		* acl.global.php
 		*/
-		#
-		#echo __METHOD__.'@'.__LINE__.'  '.'<br>'; 
+		#$this->config = $GLOBALS["CONFIG_MANAGER"]->getSetting('AUTH','ACL_ENTITY_CONTAINER','RULE');	
+		#$this->config = $GLOBALS["CONFIG_MANAGER"]->getSetting('AUTH','ACL_ENTITY_CONTAINER','ROLE');	
 		$this->CRUDE_USER_ROLE_ENTITY = new CRUDE_USER_ROLE_ENTITY();
 		#echo __METHOD__.'@'.__LINE__.'  '.'<br>'; 
 		#$this->ROLE_TABLE = $this->CRUDE_USER_ROLE_ENTITY->getRoleTable();
@@ -131,17 +130,17 @@ class CRUDE_ACL  implements AUTH_INTERFACE{
 		$this->RULE_LIST = $this->CRUDE_ACL_ENTITY->getRuleList();
 		#echo __METHOD__.'@'.__LINE__.'$this->RULE_LIST<pre>['.var_export($this->RULE_LIST, true).']</pre>'.'<br>'; 
 		/***/
-		$this->ACL_SCHEMES = $GLOBALS["CONFIG_MANAGER"]->getSetting('ACL_SCHEMES');
+		$this->ACL_SCHEMES = $GLOBALS["CONFIG_MANAGER"]->getSetting('AUTH','CRUDE_ACL_SCHEMES');
 		
 		
 		return;
 	}
 	
 	/**
-	* DESCRIPTOR: an example namespace call 
+	* authenticate
 	* 
 	* @params array 
-	* @return this->serviceResponse  
+	* @return bool  
 	*/
 	public function authenticate($params = null){
 		if(isset($_SESSION['role_id'])){
@@ -154,7 +153,7 @@ class CRUDE_ACL  implements AUTH_INTERFACE{
 	
 	
 	/**
-	* DESCRIPTOR: an example namespace call 
+	* DESCRIPTOR: authorize 
 	* https://httpd.apache.org/docs/current/mod/mod_access_compat.html#order
 	* Allow,Deny
 	*	First, all Allow directives are evaluated; at least one must match, 
@@ -333,7 +332,7 @@ class CRUDE_ACL  implements AUTH_INTERFACE{
 		return true;
 	}
 	/**
-	* 
+	* getErrorMessage
 	* @args array 
 	* @return bool 
 	*/

@@ -20,25 +20,30 @@ use JCORE\SERVICE\DAO\ORM\DAO_ORM as DAO_ORM;
  * @package JCORE\SERVICE\AUTH
 */
 class CRUDE_USER_ROLE_ENTITY  extends DAO_ORM{ 
-	/** 
-	* ACL different joins on DAO 
-	*/
-	protected $config = array(
-		'DSN' => 'BLACKWATCH',
-		'table' => 'user_role',
-		'pk_field' => 'user_role_pk',
-		'fk_field' => 'user_role_fk',
-		'user_role' => 'role',
-	);
-		
-	/** 
-	* ACL
+	/**
+	* @access protected 
+	* @var string
 	*/
 	protected $role = null;
-	protected $parentTable = 'client';
+	/**
+	* @access protected 
+	* @var string
+	*/
 	protected $ACL_TABLE = array();
+	/**
+	* @access protected 
+	* @var string
+	*/
 	protected $ACL_TREE = array();
+	/**
+	* @access protected 
+	* @var string
+	*/
 	protected $ACL_LIST = array();
+	/**
+	* @access protected 
+	* @var string
+	*/
 	protected $indexBy = 'role';
 	
 	/**
@@ -49,11 +54,16 @@ class CRUDE_USER_ROLE_ENTITY  extends DAO_ORM{
 	*/
 	public function __construct($args =null){
 		#echo __METHOD__.'@'.__LINE__.'  '.'<br>'; 
-		$config = $this->config;
-		$config["pk"] = $_SESSION['role_id'];
-		
-		parent::__construct($config);
 		#echo __METHOD__.'args<pre>'.print_r($args, true).'</pre>'.PHP_EOL;
+		if(isset($args["DSN"])){
+			$this->config["DSN"] = $args["DSN"];
+		}else{
+			$this->config = $GLOBALS["CONFIG_MANAGER"]->getSetting('AUTH','ACL_ENTITY_CONTAINER','ROLE');			
+		}
+		$this->config["pk"] = $_SESSION['role_id'];
+		
+		#echo __METHOD__.'$this->config<pre>'.print_r($this->config, true).'</pre>'.PHP_EOL;
+		parent::__construct($this->config);
 		return;
 	}
 
@@ -61,13 +71,13 @@ class CRUDE_USER_ROLE_ENTITY  extends DAO_ORM{
 	/**
 	* DESCRIPTOR: 
 	* 
-	* @param args 
+	* @param args getRoleTable
 	* @return return  
 	*/
 	public function getRoleTable($args = null){
 		
 		if(!isset($this->config["DSN"])){
-			$this->config["DSN"] = 'BLACKWATCH';
+			$this->config["DSN"] = 'JCORE';
 		}
 		if(1 >= count($this->ACL_TABLE)){
 			
@@ -91,7 +101,7 @@ class CRUDE_USER_ROLE_ENTITY  extends DAO_ORM{
 		return $this->ACL_TABLE;
 	}	
 	/**
-	* DESCRIPTOR: 
+	* DESCRIPTOR: setRoleList
 	* 
 	* @param args 
 	* @return return  
@@ -105,7 +115,7 @@ class CRUDE_USER_ROLE_ENTITY  extends DAO_ORM{
 		}
 	}
 	/**
-	* DESCRIPTOR: 
+	* DESCRIPTOR: getRoleList
 	* 
 	* @param args 
 	* @return return  
@@ -122,7 +132,7 @@ class CRUDE_USER_ROLE_ENTITY  extends DAO_ORM{
 	}
 	
 	/**
-	* DESCRIPTOR: 
+	* DESCRIPTOR: getRoleName
 	* 
 	* @param args 
 	* @return return  
@@ -134,7 +144,7 @@ class CRUDE_USER_ROLE_ENTITY  extends DAO_ORM{
 		return $role;
 	}
 	/**
-	* DESCRIPTOR: 
+	* DESCRIPTOR: getRole
 	* 
 	* @param args 
 	* @return return  
@@ -151,7 +161,7 @@ class CRUDE_USER_ROLE_ENTITY  extends DAO_ORM{
 	
 	
 	/**
-	* DESCRIPTOR: 
+	* DESCRIPTOR: getRoleTree
 	* 
 	* @param args 
 	* @return return  
@@ -185,7 +195,7 @@ class CRUDE_USER_ROLE_ENTITY  extends DAO_ORM{
 		return $this->ACL_TREE;
 	}
 	/**
-	* DESCRIPTOR: 
+	* DESCRIPTOR: getChildren
 	* 
 	* @param args 
 	*		'result' => $result,
@@ -215,7 +225,7 @@ class CRUDE_USER_ROLE_ENTITY  extends DAO_ORM{
 	}
 	
 	/**
-	* DESCRIPTOR: 
+	* DESCRIPTOR: getParents
 	* 
 	* @param args 
 	*		'result' => $result,

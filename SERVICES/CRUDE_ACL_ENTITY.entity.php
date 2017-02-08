@@ -23,34 +23,33 @@ use JCORE\SERVICE\DAO\ORM\DAO_ORM as DAO_ORM;
  * @package JCORE\SERVICE\AUTH
 */
 class CRUDE_ACL_ENTITY extends DAO_ORM{ 
-	/** 
-	* ACL different joins on DAO_ORM 
-	*/
-	protected $config = array(
-		'DSN' => 'JCORE',
-		'SELECT' => '*, rule_name AS rule',
-		'table' => 'access_control_list',
-		'pk_field' => 'access_control_list_pk',
-		#'fk_field' => 'access_control_list_fk',
-		'user_rule' => 'rule_name',
-	);
-	/** 
-	* ACL different joins on DAO_ORM 
+	/**
+	* @access protected 
+	* @var string
 	*/
 	protected $JSONColumns = array(
 		'allow',
 		'deny',
 	);
-	
-		
-	/** 
-	* ACL
+	/**
+	* @access protected 
+	* @var string
 	*/
-	protected $rule = null;
-	protected $parentTable = 'client';
 	protected $ACL_TABLE = array();
+	/**
+	* @access protected 
+	* @var string
+	*/
 	protected $ACL_TREE = array();
+	/**
+	* @access protected 
+	* @var string
+	*/
 	protected $ACL_LIST = array();
+	/**
+	* @access protected 
+	* @var string
+	*/
 	protected $indexBy = 'rule';
 	
 	/**
@@ -62,6 +61,8 @@ class CRUDE_ACL_ENTITY extends DAO_ORM{
 	public function __construct($args = null){
 		if(isset($args["DSN"])){
 			$this->config["DSN"] = $args["DSN"];
+		}else{
+			$this->config = $GLOBALS["CONFIG_MANAGER"]->getSetting('AUTH','ACL_ENTITY_CONTAINER','RULE');			
 		}
 		parent::__construct($args);
 		return;
@@ -69,7 +70,7 @@ class CRUDE_ACL_ENTITY extends DAO_ORM{
 
 	
 	/**
-	* DESCRIPTOR: 
+	* DESCRIPTOR: getRuleTable
 	* 
 	* @param args 
 	* @return return  
@@ -100,7 +101,7 @@ class CRUDE_ACL_ENTITY extends DAO_ORM{
 		return $this->ACL_TABLE;
 	}	
 	/**
-	* DESCRIPTOR: 
+	* DESCRIPTOR: setRuleList
 	* 
 	* @param args 
 	* @return return  
@@ -134,7 +135,7 @@ class CRUDE_ACL_ENTITY extends DAO_ORM{
 	}
 	
 	/**
-	* DESCRIPTOR: 
+	* DESCRIPTOR: getRule
 	* 
 	* @param args 
 	* @return return  
@@ -155,7 +156,7 @@ class CRUDE_ACL_ENTITY extends DAO_ORM{
 	
 	
 	/**
-	* DESCRIPTOR: 
+	* DESCRIPTOR: getRuleTree
 	* 
 	* @param args 
 	* @return return  
@@ -189,7 +190,7 @@ class CRUDE_ACL_ENTITY extends DAO_ORM{
 		return $this->ACL_TREE;
 	}
 	/**
-	* DESCRIPTOR: 
+	* DESCRIPTOR: getChildren
 	* 
 	* @param args 
 	*		'result' => $result,
@@ -219,8 +220,8 @@ class CRUDE_ACL_ENTITY extends DAO_ORM{
 	}
 	
 	/**
-	* DESCRIPTOR: 
-	* 
+	* DESCRIPTOR: getParents
+	* later.......
 	* @param args 
 	*		'result' => $result,
 	*		'ACL_TREE' = $ACL_TREE,

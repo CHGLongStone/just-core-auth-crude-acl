@@ -1,7 +1,7 @@
 {
 	"name" : "just-core/auth-crude-acl",
 	"description" : "Crude Role Based Access Control List",
-	"license" : "GNU",
+	"license" : "MIT",
 	"keywords" : [
 		"just-core",
 		"Service Oriented Architechture",
